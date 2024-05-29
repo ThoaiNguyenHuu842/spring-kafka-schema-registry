@@ -1,0 +1,66 @@
+server:
+  port: 8082
+  tomcat:
+    max-threads: 15
+
+
+spring:
+  cloud:
+    function:
+      definition: consumeOrderCreated;consumeOrderProcessed
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+        bindings:
+          # checkout service to produce orderCreated message
+          produceOrderCreated-out-0:
+            producer:
+              configuration:
+                key.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+                value.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+                schema.registry.url: http://localhost:8081
+                specific.avro.reader: true
+          # order service to produce orderProcessed message
+          produceOrderProcessed-out-0:
+            producer:
+              configuration:
+                key.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+                value.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+                schema.registry.url: http://localhost:8081
+                specific.avro.reader: true
+          # order service to consume consumeOrderCreated message
+          consumeOrderCreated-in-0:
+            consumer:
+              configuration:
+                key.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+                value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+                schema.registry.url: http://localhost:8081
+                specific.avro.reader: true
+          # fulfillment service to consume consumeOrderProcessed message
+          consumeOrderProcessed-in-0:
+            consumer:
+              configuration:
+                key.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+                value.deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+                schema.registry.url: http://localhost:8081
+                specific.avro.reader: true
+      bindings:
+        produceOrderCreated-out-0:
+          destination: orderCreatedTopic
+          content-type: application/*+avro
+          producer:
+            use-native-encoding: true
+        produceOrderProcessed-out-0:
+          destination: orderProcessedTopic
+          content-type: application/*+avro
+          producer:
+            use-native-encoding: true
+        consumeOrderCreated-in-0:
+          destination: orderCreatedTopic
+          content-type: application/*+avro
+          group: OrderCreatedConsumer
+        consumeOrderProcessed-in-0:
+          destination: orderProcessedTopic
+          content-type: application/*+avro
+          group: OrderProcessedConsumer
