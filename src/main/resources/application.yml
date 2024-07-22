@@ -19,16 +19,22 @@ spring:
               configuration:
                 key.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
                 value.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+                key.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
+                value.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
                 schema.registry.url: http://localhost:8081
                 specific.avro.reader: true
+                auto.register.schemas: false
           # order service to produce orderProcessed message
           produceOrderProcessed-out-0:
             producer:
               configuration:
                 key.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
                 value.serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+                key.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
+                value.subject.name.strategy: io.confluent.kafka.serializers.subject.RecordNameStrategy
                 schema.registry.url: http://localhost:8081
                 specific.avro.reader: true
+                auto.register.schemas: false
           # order service to consume consumeOrderCreated message
           consumeOrderCreated-in-0:
             consumer:

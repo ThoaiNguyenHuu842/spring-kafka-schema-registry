@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "OrderKey",
+  "namespace": "com.thoainguyen.kafka.schema",
+  "fields": [
+    {
+      "name": "customerId",
+      "type": "int"
+    }
+  ]
+}

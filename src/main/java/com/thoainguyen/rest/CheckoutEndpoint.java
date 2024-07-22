@@ -1,6 +1,6 @@
 package com.thoainguyen.rest;
 
-import com.lda.test.kafka.schema.Order;
+import com.thoainguyen.kafka.schema.Order;
 import com.thoainguyen.producer.Producer;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

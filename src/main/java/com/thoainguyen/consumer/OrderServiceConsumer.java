@@ -1,6 +1,6 @@
 package com.thoainguyen.consumer;
 
-import com.lda.test.kafka.schema.Order;
+import com.thoainguyen.kafka.schema.Order;
 import com.thoainguyen.producer.Producer;
 import java.util.function.Consumer;
 import org.springframework.beans.factory.annotation.Autowired;

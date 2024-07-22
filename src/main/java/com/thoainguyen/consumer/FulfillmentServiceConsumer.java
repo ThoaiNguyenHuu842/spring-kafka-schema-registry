@@ -1,7 +1,6 @@
 package com.thoainguyen.consumer;
 
-import com.lda.test.kafka.schema.Order;
-import com.lda.test.kafka.schema.SMessage;
+import com.thoainguyen.kafka.schema.Order;
 import java.util.function.Consumer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
     @Bean
     public Consumer<Order> consumeOrderProcessed() {
       return order -> {
-        SMessage a;
         System.out.println("Processing shipment for order: " + order);
       };
     }
